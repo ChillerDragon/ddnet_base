@@ -59,6 +59,11 @@ set(LIB_PUBLIC_HEADERS_ENGINE_EXTERNAL
 	src/ddnet_base/engine/external/md5/md5.h
 )
 
+if(TARGET_OS STREQUAL "mac")
+	target_link_libraries(ddnet_base -stdlib=libc++)
+	target_link_libraries(ddnet_base "-framework SystemConfiguration") # Required by curl 7.79.0
+endif()
+
 # install
 include(GNUInstallDirs)
 install(TARGETS ddnet_base
