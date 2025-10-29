@@ -1,5 +1,6 @@
-#include <cstdio>
 #include <ddnet_base/base/str.h>
+
+#include <cstdio>
 
 int main()
 {
