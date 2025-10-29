@@ -1,7 +1,7 @@
 #ifndef BASE_DYNAMIC_H
 #define BASE_DYNAMIC_H
 
-#include "detect.h"
+#include <ddnet_base/base/detect.h>
 
 #ifdef CONF_FAMILY_WINDOWS
 #define DYNAMIC_EXPORT __declspec(dllexport)

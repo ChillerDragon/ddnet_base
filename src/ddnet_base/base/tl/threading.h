@@ -1,7 +1,7 @@
 #ifndef BASE_TL_THREADING_H
 #define BASE_TL_THREADING_H
 
-#include "../system.h"
+#include <ddnet_base/base/../system.h>
 
 #include <atomic>
 

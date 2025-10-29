@@ -1,7 +1,7 @@
 #ifndef BASE_HASH_CTXT_H
 #define BASE_HASH_CTXT_H
 
-#include "hash.h"
+#include <ddnet_base/base/hash.h>
 
 #include <cstdint>
 

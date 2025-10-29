@@ -2,7 +2,7 @@
 #ifndef BASE_COLOR_H
 #define BASE_COLOR_H
 
-#include <base/math.h>
+#include <ddnet_base/base/math.h>
 
 #include <optional>
 #include <type_traits>

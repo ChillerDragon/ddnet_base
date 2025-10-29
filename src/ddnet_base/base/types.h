@@ -1,7 +1,7 @@
 #ifndef BASE_TYPES_H
 #define BASE_TYPES_H
 
-#include <base/detect.h>
+#include <ddnet_base/base/detect.h>
 
 #include <cstdint>
 #include <ctime>

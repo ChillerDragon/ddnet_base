@@ -3,7 +3,7 @@
 #ifndef BASE_VMATH_H
 #define BASE_VMATH_H
 
-#include "math.h"
+#include <ddnet_base/base/math.h>
 
 #include <cmath>
 #include <cstdint>

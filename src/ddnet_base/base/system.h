@@ -8,10 +8,10 @@
 #ifndef BASE_SYSTEM_H
 #define BASE_SYSTEM_H
 
-#include "detect.h"
-#include "fs.h"
-#include "str.h"
-#include "types.h"
+#include <ddnet_base/base/detect.h>
+#include <ddnet_base/base/fs.h>
+#include <ddnet_base/base/str.h>
+#include <ddnet_base/base/types.h>
 
 #include <chrono>
 #include <cinttypes>

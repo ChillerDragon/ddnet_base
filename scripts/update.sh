@@ -23,12 +23,27 @@ then
 	exit 1
 fi
 
-log "backing up old code to $OLD_SRC .."
-mv src/ "$OLD_SRC"
+copy_code() {
+	log "backing up old code to $OLD_SRC .."
+	mv src/ "$OLD_SRC"
 
-mkdir -p src/ddnet_base
-cp -r ../ddnet/src/base src/ddnet_base
+	mkdir -p src/ddnet_base
+	cp -r ../ddnet/src/base src/ddnet_base
 
-mkdir -p src/ddnet_base/engine/external
-cp -r ../ddnet/src/engine/external/md5 src/ddnet_base/engine/external
-cp ../ddnet/src/engine/external/{.clang-tidy,.clang-format,important.txt} src/ddnet_base/engine/external
+	mkdir -p src/ddnet_base/engine/external
+	cp -r ../ddnet/src/engine/external/md5 src/ddnet_base/engine/external
+	cp ../ddnet/src/engine/external/{.clang-tidy,.clang-format,important.txt} src/ddnet_base/engine/external
+}
+
+patch_includes() {
+	while IFS= read -r -d '' header_file
+	do
+		# TODO: merging into one sed command is probably faster
+		sed -E 's/^#include "(.*)"/#include <ddnet_base\/base\/\1>/' "$header_file" | \
+			sed -E 's/^#include <base\/(.*)>/#include <ddnet_base\/base\/\1>/' > "$header_file".tmp
+		mv "$header_file".tmp "$header_file"
+	done < <(find src/ -name '*.h' -print0)
+}
+
+copy_code
+patch_includes

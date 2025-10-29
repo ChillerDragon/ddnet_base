@@ -1,8 +1,8 @@
 #ifndef BASE_LOGGER_H
 #define BASE_LOGGER_H
 
-#include "lock.h"
-#include "log.h"
+#include <ddnet_base/base/lock.h>
+#include <ddnet_base/base/log.h>
 
 #include <atomic>
 #include <memory>
