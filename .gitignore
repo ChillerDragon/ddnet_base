@@ -49,6 +49,7 @@ local.properties
 
 # Ignore all the generated executables without extensions (for non-Windows
 # systems).
+assert_example
 logger_example
 strings_example
 
