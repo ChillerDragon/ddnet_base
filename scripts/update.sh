@@ -38,6 +38,12 @@ copy_code() {
 patch_includes() {
 	while IFS= read -r -d '' header_file
 	do
+		if [[ "$header_file" = src/ddnet_base/base/*/* ]]
+		then
+			sed -E 's/^#include "..\/(.*)"/#include <ddnet_base\/base\/\1>/' "$header_file" > "$header_file".tmp
+			mv "$header_file".tmp "$header_file"
+		fi
+
 		# TODO: merging into one sed command is probably faster
 		sed -E 's/^#include "(.*)"/#include <ddnet_base\/base\/\1>/' "$header_file" | \
 			sed -E 's/^#include <base\/(.*)>/#include <ddnet_base\/base\/\1>/' > "$header_file".tmp
