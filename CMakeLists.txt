@@ -64,11 +64,6 @@ if(TARGET_OS STREQUAL "mac")
 	target_link_libraries(ddnet_base "-framework SystemConfiguration") # Required by curl 7.79.0
 endif()
 
-if(APPLE)
-	find_library(CORE_FOUNDATION CoreFoundation REQUIRED)
-	target_link_libraries(ddnet_base PRIVATE ${CORE_FOUNDATION})
-endif()
-
 # install
 include(GNUInstallDirs)
 install(TARGETS ddnet_base
