@@ -25,3 +25,23 @@ make install
 g++ sample.cpp -lddnet_base
 ./a.out # => foo
 ```
+
+## macOS dependency
+
+On macOS there is an external dependency that you need to link to make it work.
+
+
+If you use cmake you can just add this section to your CMakeLists.txt
+
+```cmake
+if(APPLE)
+	find_library(CORE_FOUNDATION_LIBRARY CoreFoundation REQUIRED)
+	target_link_libraries(your_target PRIVATE ${CORE_FOUNDATION_LIBRARY})
+endif()
+```
+
+And if you use make or a manual compile command just compile it like this:
+
+```bash
+g++ your_code.cpp -lddnet_base -framework CoreFoundation
+```

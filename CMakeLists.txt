@@ -60,11 +60,8 @@ set(LIB_PUBLIC_HEADERS_ENGINE_EXTERNAL
 )
 
 if(APPLE)
-	message(STATUS "adding apple core foundation lib")
 	find_library(CORE_FOUNDATION_LIBRARY CoreFoundation REQUIRED)
-	target_link_libraries(ddnet_base PRIVATE ${CORE_FOUNDATION_LIBRARY})
-	# target_link_libraries(ddnet_base -stdlib=libc++)
-	# target_link_libraries(ddnet_base "-framework SystemConfiguration") # Required by curl 7.79.0
+	target_link_libraries(ddnet_base PUBLIC ${CORE_FOUNDATION_LIBRARY})
 endif()
 
 # install

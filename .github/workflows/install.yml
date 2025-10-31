@@ -44,9 +44,30 @@ jobs:
         cmake ..
         sudo make install
 
+    - name: Build examples
+      run: |
+          for example in ./examples/*/
+          do
+            pushd "$example"
+            mkdir build && cd build
+            cmake ..
+            make
+            example_bin="$(basename "$example")_example"
+            if [ "$example_bin" != "assert_example" ]
+            then
+              ./"$example_bin"
+            fi
+            popd
+          done
+
     - name: Build example snippet in README.md
       run: |
-          LDLIBS=-lddnet_base lintdown.sh README.md
+          libs=-lddnet_base
+          if [[ "$OSTYPE" == "darwin"* ]]
+          then
+            libs="$libs -framework CoreFoundation"
+          fi
+          LDLIBS="$libs" lintdown.sh README.md
 
     - name: Uninstall
       run: |

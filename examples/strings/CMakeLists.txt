@@ -5,3 +5,8 @@ set(CMAKE_CXX_STANDARD 20)
 project(strings_example)
 add_executable(strings_example strings.cpp)
 target_link_libraries(strings_example PUBLIC ddnet_base)
+
+if(APPLE)
+	find_library(CORE_FOUNDATION_LIBRARY CoreFoundation REQUIRED)
+	target_link_libraries(strings_example PRIVATE ${CORE_FOUNDATION_LIBRARY})
+endif()
