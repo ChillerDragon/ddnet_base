@@ -6,20 +6,17 @@ log() {
 	printf '[*] %s\n' "$1"
 }
 
-if [ ! -f scripts/update.sh ]
-then
+if [ ! -f scripts/update.sh ]; then
 	echo "wrong working directory"
 	exit 1
 fi
 
-if [ "$(basename "$PWD")" != ddnet_base ]
-then
+if [ "$(basename "$PWD")" != ddnet_base ]; then
 	echo "wrong working directory"
 	exit 1
 fi
 
-if ! OLD_SRC="$(mktemp -d /tmp/old_src_XXXXX)"
-then
+if ! OLD_SRC="$(mktemp -d /tmp/old_src_XXXXX)"; then
 	exit 1
 fi
 
@@ -36,17 +33,15 @@ copy_code() {
 }
 
 patch_includes() {
-	while IFS= read -r -d '' header_file
-	do
-		if [[ "$header_file" = src/ddnet_base/base/*/* ]]
-		then
-			sed -E 's/^#include "..\/(.*)"/#include <ddnet_base\/base\/\1>/' "$header_file" > "$header_file".tmp
+	while IFS= read -r -d '' header_file; do
+		if [[ "$header_file" = src/ddnet_base/base/*/* ]]; then
+			sed -E 's/^#include "..\/(.*)"/#include <ddnet_base\/base\/\1>/' "$header_file" >"$header_file".tmp
 			mv "$header_file".tmp "$header_file"
 		fi
 
 		# TODO: merging into one sed command is probably faster
-		sed -E 's/^#include "(.*)"/#include <ddnet_base\/base\/\1>/' "$header_file" | \
-			sed -E 's/^#include <base\/(.*)>/#include <ddnet_base\/base\/\1>/' > "$header_file".tmp
+		sed -E 's/^#include "(.*)"/#include <ddnet_base\/base\/\1>/' "$header_file" |
+			sed -E 's/^#include <base\/(.*)>/#include <ddnet_base\/base\/\1>/' >"$header_file".tmp
 		mv "$header_file".tmp "$header_file"
 	done < <(find src/ -name '*.h' -print0)
 }
