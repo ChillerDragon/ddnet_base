@@ -64,6 +64,28 @@ if(APPLE)
 	target_link_libraries(ddnet_base PUBLIC ${CORE_FOUNDATION_LIBRARY})
 endif()
 
+if(WIN32)
+	# See https://learn.microsoft.com/en-us/windows/win32/winprog/using-the-windows-headers
+	target_compile_definitions(ddnet_base PRIVATE NOMINMAX) # windows.h shouldn't define min/max macros
+	target_compile_definitions(ddnet_base PRIVATE WIN32_LEAN_AND_MEAN) # windows.h shouldn't define the name IStorage
+	# 0x0501 (Windows XP) is required for mingw to get getaddrinfo to work
+	# 0x0600 (Windows Vista) is required to use RegGetValueW and RegDeleteTreeW
+	target_compile_definitions(ddnet_base PRIVATE NTDDI_VERSION=0x06000000) # Minimum OS version (new macro, since Vista)
+	target_compile_definitions(ddnet_base PRIVATE _WIN32_WINNT=0x0600) # Minimum OS version (old macro, both must be defined)
+	target_compile_definitions(ddnet_base PRIVATE UNICODE) # Windows headers
+	target_compile_definitions(ddnet_base PRIVATE _UNICODE) # C-runtime
+endif()
+
+if(MSVC)
+	set_property(TARGET ddnet_base PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<${DBG}:Debug>) # Use static CRT
+	target_compile_options(ddnet_base PRIVATE /Zc:__cplusplus) # Fixes the __cplusplus macro
+	target_compile_options(ddnet_base PRIVATE /MP) # Use multiple cores
+	target_compile_options(ddnet_base PRIVATE /EHsc) # Only catch C++ exceptions with catch.
+	target_compile_options(ddnet_base PRIVATE /GS) # Protect the stack pointer.
+	target_compile_options(ddnet_base PRIVATE /wd4996) # Use of non-_s functions.
+	target_compile_options(ddnet_base PRIVATE /utf-8) # Use UTF-8 for source files.
+endif()
+
 # install
 include(GNUInstallDirs)
 install(TARGETS ddnet_base
