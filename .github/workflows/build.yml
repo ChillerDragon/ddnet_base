@@ -11,18 +11,26 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest, ubuntu-22.04]
+        name: [ubuntu-latest, macOS-latest, windows-latest, ubuntu-22.04, windows-latest-mingw]
         include:
-        - os: ubuntu-latest
+        - name: ubuntu-latest
+          os: ubuntu-latest
           cmake-init-env: CXXFLAGS=-Werror
-        - os: ubuntu-22.04
+        - name: ubuntu-22.04
+          os: ubuntu-22.04
           cmake-path: /usr/bin/
           cmake-init-env: CXXFLAGS=-Werror
-        - os: macOS-latest
+        - name: macOS-latest
+          os: macOS-latest
           cmake-init-env: CXXFLAGS=-Werror
-        - os: windows-latest
+        - name: windows-latest
+          os: windows-latest
           cmake-args: -A x64
           cmake-init-env: CXXFLAGS=/WX LDFLAGS=/WX
+        - name: windows-latest-mingw
+          os: windows-latest
+          cmake-args: -G Ninja -DCMAKE_SYSTEM_NAME=Windows -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DEXCEPTION_HANDLING=ON -DCMAKE_RC_COMPILER=windres -DCMAKE_AR=ar
+          cmake-init-env: CXXFLAGS=-Werror LDFLAGS=-Werror
 
     steps:
     - uses: actions/checkout@v4
