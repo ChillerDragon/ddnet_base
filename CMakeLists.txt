@@ -59,8 +59,6 @@ set(LIB_PUBLIC_HEADERS_ENGINE_EXTERNAL
 	src/ddnet_base/engine/external/md5/md5.h
 )
 
-set(DBG $<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>)
-
 if(APPLE)
 	find_library(CORE_FOUNDATION_LIBRARY CoreFoundation REQUIRED)
 	target_link_libraries(ddnet_base PUBLIC ${CORE_FOUNDATION_LIBRARY})
@@ -79,7 +77,6 @@ if(WIN32)
 endif()
 
 if(MSVC)
-	set_property(TARGET ddnet_base PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<${DBG}:Debug>) # Use static CRT
 	target_compile_options(ddnet_base PRIVATE /Zc:__cplusplus) # Fixes the __cplusplus macro
 	target_compile_options(ddnet_base PRIVATE /MP) # Use multiple cores
 	target_compile_options(ddnet_base PRIVATE /EHsc) # Only catch C++ exceptions with catch.
