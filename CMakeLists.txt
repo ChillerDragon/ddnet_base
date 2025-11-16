@@ -59,6 +59,8 @@ set(LIB_PUBLIC_HEADERS_ENGINE_EXTERNAL
 	src/ddnet_base/engine/external/md5/md5.h
 )
 
+set(DBG $<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>)
+
 if(APPLE)
 	find_library(CORE_FOUNDATION_LIBRARY CoreFoundation REQUIRED)
 	target_link_libraries(ddnet_base PUBLIC ${CORE_FOUNDATION_LIBRARY})
